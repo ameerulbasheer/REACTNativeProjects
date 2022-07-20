@@ -20,8 +20,14 @@ function StartGameScreen() {
           maxLength={2}
           keyboardType="number-pad"
         />
-        <PrimaryButton>Reset</PrimaryButton>
-        <PrimaryButton>Confirm</PrimaryButton>
+        <View style={styles.buttonsContainer}>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton>Reset</PrimaryButton>
+          </View>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton>Confirm</PrimaryButton>
+          </View>
+        </View>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -31,13 +37,13 @@ export default StartGameScreen;
 const styles = StyleSheet.create({
   inputContainer: {
     //   flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 100,
     marginHorizontal: 24,
     padding: 16,
     borderRadius: 8,
-    backgroundColor: "#72063c",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: "#513252",
     elevation: 4,
     //iOS-specific
     shadowColor: "black",
@@ -49,11 +55,17 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
     fontSize: 32,
-    borderBottomColor: "#ddb52f",
+    borderBottomColor: "#FFC18E",
     borderBottomWidth: 2,
-    color: "#ddb52f",
+    color: "#FFC18E",
     marginVertical: 8,
     fontWeight: "bold",
     textAlign: "center",
+  },
+  buttonsContainer: {
+    flexDirection: "row",
+  },
+  buttonContainer: {
+    flex: 1,
   },
 });
