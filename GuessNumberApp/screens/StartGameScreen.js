@@ -1,13 +1,39 @@
+import { useState } from "react";
 import {
   View,
   Keyboard,
   TextInput,
   StyleSheet,
   TouchableWithoutFeedback,
+  Alert,
 } from "react-native";
 import PrimaryButton from "../components/PrimaryButton";
+import Colors from "../constants/colors";
 
-function StartGameScreen() {
+function StartGameScreen({ onPickNum }) {
+  const [enteredNum, setEnteredNum] = useState("");
+
+  const resetInputHandler = () => {
+    setEnteredNum("");
+  };
+
+  const numberInputHandler = (enteredText) => {
+    setEnteredNum(enteredText);
+  };
+
+  const confirmInputHandler = () => {
+    const chosenNum = parseInt(enteredNum);
+
+    if (isNaN(chosenNum) || chosenNum <= 0 || chosenNum > 99) {
+      // show alert!
+      Alert.alert("Invalid Number!", "Number has to be between 1 and 99.", [
+        { text: "Okay", style: "destructive", onPress: resetInputHandler },
+      ]);
+      return;
+    }
+    onPickNum(chosenNum);
+  };
+
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -19,13 +45,15 @@ function StartGameScreen() {
           style={styles.numberInput}
           maxLength={2}
           keyboardType="number-pad"
+          onChangeText={numberInputHandler}
+          value={enteredNum}
         />
         <View style={styles.buttonsContainer}>
           <View style={styles.buttonContainer}>
-            <PrimaryButton>Reset</PrimaryButton>
+            <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
           </View>
           <View style={styles.buttonContainer}>
-            <PrimaryButton>Confirm</PrimaryButton>
+            <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
           </View>
         </View>
       </View>
@@ -43,7 +71,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 24,
     padding: 16,
     borderRadius: 8,
-    backgroundColor: "#513252",
+    backgroundColor: Colors.primary600,
     elevation: 4,
     //iOS-specific
     shadowColor: "black",
@@ -55,9 +83,9 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
     fontSize: 32,
-    borderBottomColor: "#FFC18E",
+    borderBottomColor: Colors.secondary500,
     borderBottomWidth: 2,
-    color: "#FFC18E",
+    color: Colors.secondary500,
     marginVertical: 8,
     fontWeight: "bold",
     textAlign: "center",
